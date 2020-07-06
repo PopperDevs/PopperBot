@@ -4,7 +4,7 @@ const { hasPermission } = require('../../lib/utils');
 
 module.exports = {
   name: 'commands',
-  aliases: [],
+  aliases: ['cmd'],
   type: commandType.owner.name,
   permissions: permissionType.owner,
   template: 'commands',
@@ -19,7 +19,7 @@ module.exports = {
         message.reply('you are not authorized to execute this command. 🛑');
       }
     } else {
-      message.channel.send(`Incorrect syntax ! Correct usage of this command : \`${process.env.PREFIX}${this.template} <rl> <commandName>\``);
+      message.channel.send(`Incorrect syntax ! Correct usage of this command : \`${process.env.PREFIX}${this.template} <add/del/rl> <commandName>\``);
     }
   },
 };
