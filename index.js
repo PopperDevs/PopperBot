@@ -2,9 +2,11 @@ const Discord = require('discord.js');
 require('dotenv').config();
 
 const { log } = require('./lib/log');
+const { getCommands } = require('./commands');
 
 const client = new Discord.Client();
-// const prefix = '!';
+
+getCommands();
 
 client.on('ready', () => {
   log.emit(
