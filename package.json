@@ -4,7 +4,8 @@
   "description": "A Discord.JS bot used as a community project to work together on a modular system.",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "lint": "npx eslint ."
   },
   "keywords": [
     "Discord",
