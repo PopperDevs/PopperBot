@@ -3,6 +3,7 @@ require('dotenv').config();
 
 const { log } = require('./lib/log');
 const { getCommands } = require('./commands');
+const { hasPermission } = require('./lib/utils');
 
 const client = new Discord.Client();
 
@@ -23,13 +24,16 @@ client.on('message', (message) => {
   const commandName = args.shift().toLowerCase();
   const command = getCommands().get(commandName);
   if (!command) return;
-
-  command.handler({
-    Discord,
-    client,
-    message,
-    args,
-  });
+  if (hasPermission({ author: message.author, member: message.member }, command)) {
+    command.handler({
+      Discord,
+      client,
+      message,
+      args,
+    });
+  } else {
+    message.reply('you are not authorized to execute this command. 🛑');
+  }
 });
 
 client.login(process.env.TOKEN);

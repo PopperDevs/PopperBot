@@ -1,6 +1,10 @@
+const { permissionType, commandType } = require('../../lib/permissions');
+
 module.exports = {
   name: 'ping',
   aliases: ['p', 'pong'],
+  type: commandType.base.name,
+  permissions: permissionType.user,
   template: 'ping',
   handler({ Discord, client, message }) {
     message.channel.send('Pinging...')
