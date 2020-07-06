@@ -10,7 +10,7 @@ function getCommands() {
   commands = new Map();
 
   fs.readdirSync(__dirname).forEach((file) => {
-    if (file !== 'index.js') {
+    if (file !== 'index.js' && file !== 'README.md') {
       const command = require(`./${file}`);
 
       command.subCommands = new Map();
