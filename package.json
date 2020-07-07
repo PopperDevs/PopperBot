@@ -15,7 +15,8 @@
   "license": "ISC",
   "dependencies": {
     "discord.js": "^12.2.0",
-    "dotenv": "^8.2.0"
+    "dotenv": "^8.2.0",
+    "node-html-parser": "^1.2.20"
   },
   "devDependencies": {
     "eslint": "^7.4.0",
