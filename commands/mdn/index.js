@@ -32,7 +32,7 @@ module.exports = {
     const embed = new Discord.MessageEmbed()
       .setAuthor(`Search results for ${args}`, client.user.avatarURL())
       .setColor('#6F39B0')
-      .setDescription('I found the following results')
+      .setDescription('I found the following results:')
       .setTimestamp(message.createdAt)
       .setFooter(`mdn | ${message.author.tag}`);
 
