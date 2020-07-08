@@ -3,7 +3,7 @@ const { evaluate } = require('mathjs');
 
 module.exports = {
   name: 'math',
-  aliases: ['m'],
+  aliases: ['m', 'calc'],
   type: commandType.base.name,
   permissions: permissionType.user,
   template: 'math',
@@ -11,13 +11,16 @@ module.exports = {
     let s = args.join(' ');
     const embed = new Discord.MessageEmbed()
       .setTimestamp(message.createdAt)
+      .setTitle(s)
       .setFooter(`math | ${message.author.tag}`);
     try {
-      embed.addField('Result', evaluate(s)).setColor('#6F39B0');
+      embed
+        .addField('Result', '```\n' + evaluate(s) + '\n```')
+        .setColor('#6F39B0');
     } catch (e) {
-      embed.setColor('#FF9AA2').setTitle(e);
+      embed.setColor('#FF9AA2').setDescription(e);
     }
 
-    return message.channel.send(embed);
+    message.channel.send(embed);
   },
 };
