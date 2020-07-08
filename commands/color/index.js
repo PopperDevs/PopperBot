@@ -2,7 +2,7 @@ const { permissionType, commandType } = require('../../lib/permissions');
 
 module.exports = {
   name: 'color',
-  aliases: ['color'],
+  aliases: [],
   type: commandType.base.name,
   permissions: permissionType.user,
   template: 'color',
@@ -15,7 +15,11 @@ module.exports = {
       subCommand.handler({ Discord, message, args });
     } else {
       message.channel.send(
-        `Incorrect syntax! Correct usage of this command: \`${process.env.PREFIX}${this.template} <hex/rgb> <color>\``
+        new Discord.MessageEmbed()
+          .setColor('#FF9AA2')
+          .setTitle(
+            `Incorrect syntax! Correct usage of this command: \`${process.env.PREFIX}${this.template} <hex/rgb> <color>\``
+          )
       );
     }
   },

@@ -1,12 +1,14 @@
 const { permissionType, commandType } = require('../../lib/permissions');
+const { parent } = require('./index');
 
 module.exports = {
   name: 'rgb',
-  aliases: ['rgb'],
+  aliases: [],
   type: commandType.base.name,
   permissions: permissionType.user,
   template: 'rgb',
-  async handler({ Discord, args, message }) {
+  parent,
+  handler({ Discord, args, message }) {
     let s = args.join(' ');
     console.log(args);
     if (
@@ -18,7 +20,7 @@ module.exports = {
         new Discord.MessageEmbed()
           .setColor('#FF9AA2')
           .setTitle(
-            'Invalid usage. Please enter a valid RGB code, separated by spaces.'
+            `Incorrect syntax! Correct usage of this command: \`${process.env.PREFIX}color rgb <red> <green> <blue>\`, for example \`${process.env.PREFIX}color rgb 255 255 255\``
           )
       );
     }
@@ -34,7 +36,7 @@ module.exports = {
         .setTitle('RGB ' + args.join(', '))
         .setThumbnail(`https://via.placeholder.com/150/${hexCode}?text=+`)
         .setTimestamp(message.createdAt)
-        .setFooter(message.author.tag)
+        .setFooter(`rgb | ${message.author.tag}`)
         .addField('Hex', '#' + hexCode)
     );
   },

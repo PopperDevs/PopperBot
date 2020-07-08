@@ -1,18 +1,22 @@
 const { permissionType, commandType } = require('../../lib/permissions');
+const { parent } = require('./index');
 
 module.exports = {
   name: 'hex',
-  aliases: ['hex'],
+  aliases: [],
   type: commandType.base.name,
   permissions: permissionType.user,
   template: 'hex',
-  async handler({ Discord, args, message }) {
+  parent,
+  handler({ Discord, args, message }) {
     let s = args[0];
     if (s !== 'random' && !/^([0-9a-f]{3}){1,2}$/i.test(s)) {
       return message.channel.send(
         new Discord.MessageEmbed()
           .setColor('#FF9AA2')
-          .setTitle('Invalid usage. Please put a valid hex code in.')
+          .setTitle(
+            `Incorrect syntax! Correct usage of this command: \`${process.env.PREFIX}color rgb <hex value>\`, for example \`${process.env.PREFIX}color hex ffffff\``
+          )
       );
     }
     if (s === 'random') s = Math.random().toString(16).slice(2, 8);
@@ -23,7 +27,7 @@ module.exports = {
         .setTitle('#' + s)
         .setThumbnail(`https://via.placeholder.com/150/${s}?text=+`)
         .setTimestamp(message.createdAt)
-        .setFooter(message.author.tag)
+        .setFooter(`hex | ${message.author.tag}`)
         .addField(
           'RGB',
           parseInt(s.slice(0, 2), 16) +
