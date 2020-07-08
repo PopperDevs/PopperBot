@@ -16,6 +16,7 @@
   "dependencies": {
     "discord.js": "^12.2.0",
     "dotenv": "^8.2.0",
+    "mathjs": "^7.0.2",
     "node-html-parser": "^1.2.20"
   },
   "devDependencies": {
