@@ -6,8 +6,8 @@ module.exports = {
   type: commandType.base.name,
   permissions: permissionType.user,
   template: 'hex',
-  async handler({ Discord, client, message }) {
-    let s = message.content.slice(5) || 'random';
+  async handler({ Discord, args, message }) {
+    let s = args[0];
     if (s !== 'random' && !/^([0-9a-f]{3}){1,2}$/i.test(s)) {
       return message.channel.send(
         new Discord.MessageEmbed()
@@ -22,6 +22,8 @@ module.exports = {
         .setColor('#' + s)
         .setTitle('#' + s)
         .setThumbnail(`https://via.placeholder.com/150/${s}?text=+`)
+        .setTimestamp(message.createdAt)
+        .setFooter(message.author.tag)
         .addField(
           'RGB',
           parseInt(s.slice(0, 2), 16) +
