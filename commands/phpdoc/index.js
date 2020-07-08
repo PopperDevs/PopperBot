@@ -10,6 +10,16 @@ module.exports = {
   permissions: permissionType.user,
   template: 'phpdoc',
   async handler({ Discord, client, message, args }) {
+    if (args.length === 0) {
+      return message.channel.send(
+        new Discord.MessageEmbed()
+          .setColor('#FF9AA2')
+          .setTitle(
+            `Incorrect syntax! Correct usage of this command: \`${process.env.PREFIX}${this.template} <query>\``
+          )
+      );
+    }
+
     const searchQuery = args.join(' ');
     const encodedQuery = encodeURIComponent(searchQuery);
 
@@ -23,7 +33,7 @@ module.exports = {
       .setAuthor(`Search results for ${args}`, client.user.avatarURL())
       .setColor('#6F39B0')
       .setTimestamp(message.createdAt)
-      .setFooter(message.author.tag);
+      .setFooter(`php | ${message.author.tag}`);
 
     if (text.includes("doesn't exist")) {
       embed.setDescription(
