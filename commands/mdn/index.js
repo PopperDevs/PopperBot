@@ -5,7 +5,7 @@ const { permissionType, commandType } = require('../../lib/permissions');
 
 module.exports = {
   name: 'mdn',
-  aliases: [],
+  aliases: ['mdn'],
   type: commandType.base.name,
   permissions: permissionType.user,
   template: 'mdn',
