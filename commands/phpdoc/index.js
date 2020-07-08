@@ -5,13 +5,13 @@ const { permissionType, commandType } = require('../../lib/permissions');
 
 module.exports = {
   name: 'phpdoc',
-  aliases: ['phpdoc'],
+  aliases: ['php'],
   type: commandType.base.name,
   permissions: permissionType.user,
   template: 'phpdoc',
-  async handler({ Discord, client, message }) {
-    const args = message.content.slice(8);
-    const encodedQuery = encodeURIComponent(args);
+  async handler({ Discord, client, message, args }) {
+    const searchQuery = args.join(' ');
+    const encodedQuery = encodeURIComponent(searchQuery);
 
     const queryUrl = `https://php.net/${encodedQuery}`;
 
@@ -21,7 +21,9 @@ module.exports = {
 
     const embed = new Discord.MessageEmbed()
       .setAuthor(`Search results for ${args}`, client.user.avatarURL())
-      .setColor('#6F39B0');
+      .setColor('#6F39B0')
+      .setTimestamp(message.createdAt)
+      .setFooter(message.author.tag);
 
     if (text.includes("doesn't exist")) {
       embed.setDescription(
