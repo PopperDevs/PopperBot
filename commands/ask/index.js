@@ -15,7 +15,7 @@ module.exports = {
       .setColor('#6F39B0')
       .setDescription(
         `You will get help much faster by just asking your question 
-        and providing  any relevant code examples.\n\n https://dontasktoask.com/`
+        and providing any relevant code examples.\n https://dontasktoask.com/`
       )
       .setTimestamp(message.createdAt)
       .setFooter(`ask | ${message.author.tag}`);
