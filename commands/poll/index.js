@@ -56,6 +56,7 @@ module.exports = {
       .setColor('#6F39B0')
       .setDescription(formatChoices(pollChoices))
       .addField('Poll will end after', mstoTime(pollDuration * 1000))
+      .setFooter(`poll | ${message.author.tag}`)
       .setTimestamp(message.createdAt);
     message.channel.send(embed);
 
