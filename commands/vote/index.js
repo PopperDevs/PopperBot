@@ -11,7 +11,7 @@ function validateVote({ poll, userId, voteIdx }) {
 
 module.exports = {
   name: 'vote',
-  aliases: ['vote'],
+  aliases: [],
   type: commandType.base.name,
   permissions: permissionType.user,
   template: 'vote <choice number>',
