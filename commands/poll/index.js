@@ -13,6 +13,13 @@ const getWinnerIdx = (arr) =>
     )
     .pop();
 
+const validate = ({ pollDuration, pollTitle, pollChoices }) => {
+  if (!pollDuration) return 'Invalid duration !';
+  if (!pollTitle) return 'Invalid title !';
+  if (pollChoices.length < 2) return 'Poll choices must be at least 2 !';
+  return true;
+};
+
 module.exports = {
   name: 'poll',
   aliases: ['newpoll'],
@@ -20,19 +27,25 @@ module.exports = {
   permissions: permissionType.user,
   async handler({ Discord, message, args }) {
     // check if there is a poll
-    if (getPoll()) return message.reply('There is a poll in action !');
-    args = args.join(' ').split('-');
+    if (getPoll())
+      return message.channel.send(
+        new Discord.MessageEmbed()
+          .setColor('#FF9AA2')
+          .setTitle('There is a poll in action !')
+      );
 
+    args = args.join(' ').split('-');
     // get params
     const pollDuration = +args[0];
     const pollTitle = args[1];
     const pollChoices = args[2] ? args[2].split(',') : [];
 
     // validate
-    if (!pollDuration) return message.reply('Invalid duration !');
-    if (!pollTitle) return message.reply('Invalid title !');
-    if (pollChoices.length < 2)
-      return message.reply('Poll choices must be at least 2 !');
+    const validation = validate({ pollDuration, pollTitle, pollChoices });
+    if (validation !== true)
+      message.channel.send(
+        new Discord.MessageEmbed().setColor('#FF9AA2').setTitle(validation)
+      );
 
     // create the poll
     addPoll({ title: pollTitle, choices: pollChoices });
