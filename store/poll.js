@@ -1,24 +1,26 @@
 let poll;
 
-const addPoll = ({ title, choices }) => {
+function addPoll({ title, choices }) {
   poll = {
     title,
     choices,
     votes: {},
   };
-};
+}
 
-const getPoll = () => poll;
+function getPoll() {
+  return poll;
+}
 
-const clearPoll = () => {
+function clearPoll() {
   poll = undefined;
-};
+}
 
-const vote = ({ id, choiceIdx }) => {
+function vote({ id, choiceIdx }) {
   poll.votes = {
     ...poll.votes,
     [id]: choiceIdx,
   };
-};
+}
 
 module.exports = { addPoll, getPoll, clearPoll, vote };

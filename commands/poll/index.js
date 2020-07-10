@@ -2,23 +2,25 @@ const { permissionType, commandType } = require('../../lib/permissions');
 const { addPoll, clearPoll, getPoll } = require('../../store/poll');
 const { mstoTime } = require('../../lib/utils');
 
-const formatChoices = (choices) =>
-  choices.map((choice, idx) => `${idx + 1} - ${choice}`).join('\n');
+function formatChoices(choices) {
+  return choices.map((choice, idx) => `${idx + 1} - ${choice}`).join('\n');
+}
 
-const getWinnerIdx = (arr) =>
-  arr
+function getWinnerIdx(arr) {
+  return arr
     .sort(
       (a, b) =>
         arr.filter((v) => v === a).length - arr.filter((v) => v === b).length
     )
     .pop();
+}
 
-const validate = ({ pollDuration, pollTitle, pollChoices }) => {
+function validatePoll({ pollDuration, pollTitle, pollChoices }) {
   if (!pollDuration) return 'Invalid duration !';
   if (!pollTitle) return 'Invalid title !';
   if (pollChoices.length < 2) return 'Poll choices must be at least 2 !';
   return true;
-};
+}
 
 module.exports = {
   name: 'poll',
@@ -41,9 +43,9 @@ module.exports = {
     const pollChoices = args[2] ? args[2].split(',') : [];
 
     // validate
-    const validation = validate({ pollDuration, pollTitle, pollChoices });
+    const validation = validatePoll({ pollDuration, pollTitle, pollChoices });
     if (validation !== true)
-      message.channel.send(
+      return message.channel.send(
         new Discord.MessageEmbed().setColor('#FF9AA2').setTitle(validation)
       );
 
