@@ -70,7 +70,7 @@ module.exports = {
       // check if there are votes
       if (!choices.length)
         return message.channel.send(
-          `:hourglass_flowing_sand: The poll **"${poll.title}"** ended, there's no winner`
+          `⏳ The poll **"${poll.title}"** ended, there's no winner`
         );
 
       // get the winner choice and announce it
@@ -78,9 +78,7 @@ module.exports = {
       const embed = new Discord.MessageEmbed()
         .setAuthor(`The poll "${poll.title}" ended`)
         .setColor('#6F39B0')
-        .setDescription(
-          `:partying_face: The choice **"${winnerChoice}"** won the poll !`
-        )
+        .setDescription(`🥳 The choice **"${winnerChoice}"** won the poll !`)
         .setTimestamp(message.createdAt);
       return message.channel.send(embed);
     }, pollDuration * 1000);

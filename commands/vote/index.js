@@ -6,7 +6,7 @@ module.exports = {
   type: commandType.base.name,
   permissions: permissionType.user,
   aliases: ['vote'],
-  async handler({ Discord, message, args }) {
+  handler({ Discord, message, args }) {
     const poll = getPoll();
     const voteIdx = +args.join(' ') - 1;
     const userId = message.author.id;
@@ -23,6 +23,7 @@ module.exports = {
       .setAuthor('Voted Successfully')
       .setColor('#6F39B0')
       .setDescription(`You voted for **"${poll.choices[voteIdx]}"**`)
+      .setFooter(`vote | ${message.author.tag}`)
       .setTimestamp(message.createdAt);
     return message.reply(embed);
   },
