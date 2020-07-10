@@ -34,6 +34,6 @@ module.exports = {
       .setDescription(`You voted for **"${poll.choices[voteIdx]}"**`)
       .setFooter(`vote | ${message.author.tag}`)
       .setTimestamp(message.createdAt);
-    return message.reply(embed);
+    message.reply(embed);
   },
 };
