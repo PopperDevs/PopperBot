@@ -1,5 +1,13 @@
 const { permissionType, commandType } = require('../../lib/permissions');
-const { addPoll, vote, getPoll } = require('../../store/poll');
+const { vote, getPoll } = require('../../store/poll');
+
+function validateVote({ poll, userId, voteIdx }) {
+  if (!poll) return 'No polls in action !';
+  if (poll.votes[userId] !== undefined) return 'You already voted !';
+  if (voteIdx < 0 || voteIdx >= poll.choices.length)
+    return 'Invalid choice number !';
+  return true;
+}
 
 module.exports = {
   name: 'vote',
@@ -11,11 +19,11 @@ module.exports = {
     const voteIdx = +args.join(' ') - 1;
     const userId = message.author.id;
 
-    if (!poll) return message.reply('No polls in action !');
-    if (poll.votes[userId] !== undefined)
-      return message.reply('You already voted !');
-    if (voteIdx < 0 || voteIdx >= poll.choices.length)
-      return message.reply('Invalid choice number !');
+    const validation = validateVote({ poll, userId, voteIdx });
+    if (validation !== true)
+      return message.channel.send(
+        new Discord.MessageEmbed().setColor('#FF9AA2').setTitle(validation)
+      );
 
     vote({ id: userId, choiceIdx: voteIdx });
 
