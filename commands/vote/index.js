@@ -11,9 +11,10 @@ function validateVote({ poll, userId, voteIdx }) {
 
 module.exports = {
   name: 'vote',
+  aliases: ['vote'],
   type: commandType.base.name,
   permissions: permissionType.user,
-  aliases: ['vote'],
+  template: 'vote <choice number>',
   handler({ Discord, message, args }) {
     const poll = getPoll();
     const voteIdx = +args.join(' ') - 1;

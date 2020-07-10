@@ -27,6 +27,7 @@ module.exports = {
   aliases: ['newpoll'],
   type: commandType.base.name,
   permissions: permissionType.user,
+  template: 'poll <(duration in sec.)-(title)-(choices separated by ,)>',
   async handler({ Discord, message, args }) {
     // check if there is a poll
     if (getPoll())
@@ -67,18 +68,15 @@ module.exports = {
       const choices = Object.values(poll.votes);
       clearPoll();
 
-      // check if there are votes
-      if (!choices.length)
-        return message.channel.send(
-          `⏳ The poll **"${poll.title}"** ended, there's no winner`
-        );
-
       // get the winner choice and announce it
       const winnerChoice = poll.choices[getWinnerIdx(choices)];
+      const winnerMsg = winnerChoice
+        ? `🥳 The choice **"${winnerChoice}"** won the poll !`
+        : "There's no winner";
       const embed = new Discord.MessageEmbed()
-        .setAuthor(`The poll "${poll.title}" ended`)
+        .setAuthor(`⏳ The poll "${poll.title}" ended`)
         .setColor('#6F39B0')
-        .setDescription(`🥳 The choice **"${winnerChoice}"** won the poll !`)
+        .setDescription(winnerMsg)
         .setTimestamp(message.createdAt);
       return message.channel.send(embed);
     }, pollDuration * 1000);
