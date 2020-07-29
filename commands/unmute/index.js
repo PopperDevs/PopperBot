@@ -42,7 +42,7 @@ module.exports = {
   name: 'unmute',
   aliases: ['demute'],
   type: commandType.mod.name,
-  permissions: permissionType.user,
+  permissions: permissionType.mod,
   guildPermissions: [guildPermissionType.MANAGE_MESSAGES],
   template: 'unmute <@User/@Role>',
   async handler({ client, message, args }) {

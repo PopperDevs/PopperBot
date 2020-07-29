@@ -42,7 +42,7 @@ module.exports = {
   name: 'mute',
   aliases: ['silence', 'shut'],
   type: commandType.mod.name,
-  permissions: permissionType.user,
+  permissions: permissionType.mod,
   guildPermissions: [guildPermissionType.MANAGE_MESSAGES],
   template: 'mute <@User/@Role> [duration in minutes] [reason]',
   async handler({ client, message, args }) {
