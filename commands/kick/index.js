@@ -16,7 +16,7 @@ module.exports = {
   name: 'kick',
   aliases: [],
   type: commandType.mod.name,
-  permissions: permissionType.user,
+  permissions: permissionType.mod,
   guildPermissions: [guildPermissionType.KICK_MEMBERS],
   template: 'kick <@User/@Role> [reason]',
   async handler({ client, message, args }) {

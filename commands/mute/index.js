@@ -30,10 +30,10 @@ async function setMutedRole(guild) {
 function isManageable(member, author) {
   return (
     member !== member.guild.owner
+    && author.roles.highest.comparePositionTo(member.roles.highest) > 0
     && (
       author === member.guild.owner
       || !member.permissions.has(guildPermissionType.MANAGE_MESSAGES)
-      || author.roles.highest.comparePositionTo(member.roles.highest) > 0
     )
   );
 }
@@ -71,12 +71,12 @@ module.exports = {
           message.reply('you are not allowed to mute the members with this role.');
         } else {
           role.members.forEach(async (member) => {
-            await member.roles.add(mutedRole, `Muted by ${client.user.tag}${args.length > 1 ? ` for about ${parseTime(args[1]).parsed}` : ''}${args.length > 2 ? ` for the following reason : ${args.slice(2).join(' ')}` : ''}.`);
+            await member.roles.add(mutedRole, `Muted by ${client.user.tag}${args.length > 1 && parseTime(args[1]) ? ` for about ${parseTime(args[1]).parsed}` : ''}${args.length > (args.length > 1 && parseTime(args[1]) ? 2 : 1) ? ` for the following reason : ${args.slice(parseTime(args[1]) ? 2 : 1).join(' ')}` : ''}.`);
             if (args.length > 1) {
               setTimeout(() => member.roles.remove(mutedRole, `Unmuted by ${client.user.tag} after ${parseTime(args[1]).parsed}`), parseTime(args[1]).millis);
             }
           });
-          message.channel.send(`All the members with the role ${role} got muted${args.length > 1 ? ` for about ${parseTime(args[1]).parsed}` : ''}${args.length > 2 ? ` for the following reason : ${args.slice(2).join(' ')}` : ''}.`);
+          message.channel.send(`All the members with the role ${role} got muted${args.length > 1 && parseTime(args[1]) ? ` for about ${parseTime(args[1]).parsed}` : ''}${args.length > (args.length > 1 && parseTime(args[1]) ? 2 : 1) ? ` for the following reason : ${args.slice(parseTime(args[1]) ? 2 : 1).join(' ')}` : ''}.`);
         }
       }
     } else {

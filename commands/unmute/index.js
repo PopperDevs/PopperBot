@@ -30,10 +30,10 @@ async function setMutedRole(guild) {
 function isManageable(member, author) {
   return (
     member !== member.guild.owner
+    && author.roles.highest.comparePositionTo(member.roles.highest) > 0
     && (
       author === member.guild.owner
       || !member.permissions.has(guildPermissionType.MANAGE_MESSAGES)
-      || author.roles.highest.comparePositionTo(member.roles.highest) > 0
     )
   );
 }
@@ -57,14 +57,14 @@ module.exports = {
         } else if (!isManageable(member, message.member)) {
           message.reply('you are not allowed to unmute this member.');
         } else {
-          const unmutedMember = await member.roles.remove(mutedRole, `Unmuted by ${client.user.tag}.`);
-          message.channel.send(`Member ${unmutedMember} got unmuted.`);
+          const unMutedMember = await member.roles.remove(mutedRole, `Unmuted by ${client.user.tag}.`);
+          message.channel.send(`Member ${unMutedMember} got unmuted.`);
         }
       } else if (await getRole(message, args[0])) {
         const role = await getRole(message, args[0]);
         if (message.author !== role.guild.owner
           && message.member.roles.highest.comparePositionTo(role) < 1) {
-          message.reply('you are not allowed to mute the members with this role.');
+          message.reply('you are not allowed to unmute the members with this role.');
         } else {
           role.members.forEach(async (member) => {
             await member.roles.remove(mutedRole, `Unmuted by ${client.user.tag}.`);
