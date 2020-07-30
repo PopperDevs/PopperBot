@@ -28,7 +28,7 @@ module.exports = {
         if (!isManageable(member, message.member)) {
           message.reply('you are not allowed to kick this member.');
         } else {
-          const mutedMember = await member.kick(`Kick by ${client.user.tag}${args.length > 1 ? ` for the following reason : ${args.slice(1).join(' ')}` : ''}.`);
+          const mutedMember = await member.kick(`Kicked by ${client.user.tag}${args.length > 1 ? ` for the following reason : ${args.slice(1).join(' ')}` : ''}.`);
           message.channel.send(`Member ${mutedMember} got kicked${args.length > 1 ? ` for the following reason : ${args.slice(1).join(' ')}` : ''}.`);
         }
       } else if (await getRole(message, args[0])) {
