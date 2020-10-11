@@ -18,8 +18,9 @@ function getCommands() {
       fs.readdirSync(`${__dirname}/${file}`).forEach((subCommand) => {
         if (subCommand !== 'index.js') {
           const subCommandInfo = require(`${__dirname}/${file}/${subCommand}`);
+          subCommandInfo.parent = command;
           command.subCommands.set(subCommandInfo.name, subCommandInfo);
-          subCommandInfo.aliases.forEach((alias) => {
+          (subCommandInfo.aliases || []).forEach((alias) => {
             command.subCommands.set(alias, subCommandInfo);
           });
         }
@@ -28,7 +29,7 @@ function getCommands() {
       commands.set(command.name, command);
       log.emit('log', `Command ${command.name} was loaded !`);
 
-      command.aliases.forEach((alias) => {
+      (command.aliases || []).forEach((alias) => {
         commands.set(alias, command);
         log.emit('log', `Alias ${alias} was loaded !`);
       });

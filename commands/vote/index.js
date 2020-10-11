@@ -4,8 +4,7 @@ const { vote, getPoll } = require('../../store/poll');
 function validateVote({ poll, userId, voteIdx }) {
   if (!poll) return 'No polls in action !';
   if (poll.votes[userId] !== undefined) return 'You already voted !';
-  if (voteIdx < 0 || voteIdx >= poll.choices.length)
-    return 'Invalid choice number !';
+  if (voteIdx < 0 || voteIdx >= poll.choices.length) { return 'Invalid choice number !'; }
   return true;
 }
 
@@ -21,10 +20,12 @@ module.exports = {
     const userId = message.author.id;
 
     const validation = validateVote({ poll, userId, voteIdx });
-    if (validation !== true)
-      return message.channel.send(
+    if (validation !== true) {
+      message.channel.send(
         new Discord.MessageEmbed().setColor('#FF9AA2').setTitle(validation)
       );
+      return;
+    }
 
     vote({ id: userId, choiceIdx: voteIdx });
 

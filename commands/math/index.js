@@ -1,5 +1,5 @@
-const { permissionType, commandType } = require('../../lib/permissions');
 const { evaluate } = require('mathjs');
+const { permissionType, commandType } = require('../../lib/permissions');
 
 module.exports = {
   name: 'math',
@@ -8,14 +8,14 @@ module.exports = {
   permissions: permissionType.user,
   template: 'math',
   handler({ Discord, args, message }) {
-    let s = args.join(' ');
+    const s = args.join(' ');
     const embed = new Discord.MessageEmbed()
       .setTimestamp(message.createdAt)
       .setTitle(s)
       .setFooter(`math | ${message.author.tag}`);
     try {
       embed
-        .addField('Result', '```\n' + evaluate(s) + '\n```')
+        .addField('Result', `\`\`\`\n${evaluate(s)}\n\`\`\``)
         .setColor('#6F39B0');
     } catch (e) {
       embed.setColor('#FF9AA2').setDescription(e);

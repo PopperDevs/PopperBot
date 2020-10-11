@@ -1,4 +1,5 @@
 const { permissionType, commandType } = require('../../lib/permissions');
+const { unAuthorizedCommand, syntaxErrorMessage } = require('../../lib/responseHandler');
 
 const { hasPermission } = require('../../lib/utils');
 
@@ -8,19 +9,21 @@ module.exports = {
   type: commandType.owner.name,
   permissions: permissionType.owner,
   template: 'commands',
-  handler({ message, args }) {
+  handler({
+    Discord, client, message, args
+  }) {
     const subCommand = this.subCommands.get(args[0]);
 
     if (subCommand) {
       if (hasPermission({ author: message.author, member: message.member }, subCommand)) {
         args.shift();
-        subCommand.handler({ message, args });
-      } else {
-        message.reply('you are not authorized to execute this command. 🛑');
+        return subCommand.handler({
+          Discord, client, message, args
+        });
       }
-    } else {
-      message.channel.send(`Incorrect syntax ! Correct usage of this command : \`${process.env.PREFIX}${this.template} <add/del/rl> <commandName>\``);
+      return unAuthorizedCommand(Discord, message, this);
     }
+    return syntaxErrorMessage(Discord, message, this, ' <add/del/rl> <commandName>');
   },
 };
 

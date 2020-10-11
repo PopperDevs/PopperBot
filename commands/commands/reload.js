@@ -1,16 +1,16 @@
 const fs = require('fs');
 
-const parent = require('./index');
-
 const { log } = require('../../lib/log');
+const { syntaxErrorMessage, validMessage } = require('../../lib/responseHandler');
 const { getCommands } = require('../index');
 
 module.exports = {
   name: 'reload',
   aliases: ['rl'],
   template: 'rl <commandName>',
-  parent,
-  handler({ message, args }) {
+  handler({
+    Discord, client, message, args
+  }) {
     // if (args[0] === 'all') {
     //   getCommands().forEach((command) => {
     //     delete require.cache[require.resolve(`../${command.name}`)];
@@ -55,10 +55,16 @@ module.exports = {
         log.emit('log', `${new Date().toLocaleString()} | Alias ${alias} was reloaded !`);
       });
 
-      message.channel.send(`The command ${comm.name} has been reloaded !`);
-    } else {
-      message.channel.send(`The command you tried to reload is unknown ! Correct usage of this command : \`${process.env.PREFIX}${this.parent.template} ${this.template}\``);
+      return validMessage({
+        Discord,
+        client,
+        message,
+        command: this,
+        description: `The command ${comm.name} has been reloaded !`
+      });
     }
+    return syntaxErrorMessage(Discord, message, this);
+
     // }
   },
 };

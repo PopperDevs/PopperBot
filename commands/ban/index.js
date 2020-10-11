@@ -14,7 +14,6 @@ function isManageable(member, author) {
 
 module.exports = {
   name: 'ban',
-  aliases: [],
   type: commandType.mod.name,
   permissions: permissionType.mod,
   guildPermissions: [guildPermissionType.BAN_MEMBERS],
@@ -22,7 +21,9 @@ module.exports = {
   async handler({ client, message, args }) {
     if (!message.guild) {
       message.channel.send('This command can only be used in a guild.');
-    } else if (args.length > 0) {
+      return;
+    }
+    if (args.length > 0) {
       if (await getUser(message, args[0])) {
         const member = await message.guild.members.fetch(await getUser(message, args[0]));
         if (!isManageable(member, message.member)) {

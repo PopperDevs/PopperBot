@@ -30,25 +30,29 @@ module.exports = {
   template: 'poll <duration (sec)> <title> <choices (comma separated)>',
   handler({ Discord, message, args }) {
     // check if there is a poll
-    if (getPoll())
-      return message.channel.send(
+    if (getPoll()) {
+      message.channel.send(
         new Discord.MessageEmbed()
           .setColor('#FF9AA2')
           .setTitle('There is a poll in action !')
       );
+      return;
+    }
 
-    args = args.join(' ').split('-');
+    const parsedArgs = args.join(' ').split('-');
     // get params
-    const pollDuration = +args[0];
-    const pollTitle = args[1];
-    const pollChoices = args[2] ? args[2].split(',') : [];
+    const pollDuration = +parsedArgs[0];
+    const pollTitle = parsedArgs[1];
+    const pollChoices = parsedArgs[2] ? parsedArgs[2].split(',') : [];
 
     // validate
     const validation = validatePoll({ pollDuration, pollTitle, pollChoices });
-    if (validation !== true)
-      return message.channel.send(
+    if (validation !== true) {
+      message.channel.send(
         new Discord.MessageEmbed().setColor('#FF9AA2').setTitle(validation)
       );
+      return;
+    }
 
     // create the poll
     addPoll({ title: pollTitle, choices: pollChoices });
@@ -73,13 +77,13 @@ module.exports = {
       const winnerMsg = winnerChoice
         ? `🥳 The choice **"${winnerChoice}"** won the poll !`
         : "There's no winner";
-      const embed = new Discord.MessageEmbed()
+      const winningEmbed = new Discord.MessageEmbed()
         .setAuthor(`⏳ The poll "${poll.title}" ended`)
         .setColor('#6F39B0')
         .setDescription(winnerMsg)
         .setFooter(`poll | ${message.author.tag}`)
         .setTimestamp(message.createdAt);
-      return message.channel.send(embed);
+      return message.channel.send(winningEmbed);
     }, pollDuration * 1000);
   },
 };

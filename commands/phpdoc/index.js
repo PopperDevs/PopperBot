@@ -9,15 +9,18 @@ module.exports = {
   type: commandType.base.name,
   permissions: permissionType.user,
   template: 'phpdoc',
-  async handler({ Discord, client, message, args }) {
+  async handler({
+    Discord, client, message, args
+  }) {
     if (args.length === 0) {
-      return message.channel.send(
+      message.channel.send(
         new Discord.MessageEmbed()
           .setColor('#FF9AA2')
           .setTitle(
             `Incorrect syntax! Correct usage of this command: \`${process.env.PREFIX}${this.template} <query>\``
           )
       );
+      return;
     }
 
     const searchQuery = args.join(' ');

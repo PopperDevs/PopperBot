@@ -12,21 +12,21 @@ module.exports = {
     if (!message.guild) {
       message.channel.send('This command can only be used in a guild.');
     } else if (args.length > 0) {
-      const time = parseTime(args[0]) || (args[0] === 'off' ? {millis:0} : null);
+      const time = parseTime(args[0]) || (args[0] === 'off' ? { millis: 0 } : null);
       if (time) {
-        await message.channel.setRateLimitPerUser(time.millis/1000);
+        await message.channel.setRateLimitPerUser(time.millis / 1000);
         message.channel.send(
           `The${
-            time.millis > 0 
+            time.millis > 0
               ? ' new '
               : ' '
           }rate limit is now ${
-            time.millis > 0 
+            time.millis > 0
               ? `of ${
-                time.millis >= 60000 
-                  ? time.parsed 
-                  : `${time.millis/1000} second${
-                    time.millis > 1000 
+                time.millis >= 60000
+                  ? time.parsed
+                  : `${time.millis / 1000} second${
+                    time.millis > 1000
                       ? 's'
                       : ''
                   }`

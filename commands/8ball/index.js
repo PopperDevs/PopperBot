@@ -1,4 +1,5 @@
 const { permissionType, commandType } = require('../../lib/permissions');
+const { validMessage, syntaxErrorMessage } = require('../../lib/responseHandler');
 
 const answers = [
   'As I see it, yes.',
@@ -29,27 +30,24 @@ module.exports = {
   type: commandType.base.name,
   permissions: permissionType.user,
   template: '8ball <question>',
-  async handler({ Discord, client, message, args }) {
+  async handler({
+    Discord, client, message, args
+  }) {
     if (args.length === 0) {
-      return message.channel.send(
-        new Discord.MessageEmbed()
-          .setColor('#FF9AA2')
-          .setTitle(
-            `Incorrect syntax! Correct usage of this command: \`${process.env.PREFIX}${this.template}\``
-          )
-      );
+      syntaxErrorMessage(Discord, message, this);
+      return;
     }
 
-    const randomNum = Math.floor(Math.random() * (answers.length - 0) + 0);
+    const randomNum = Math.floor(Math.random() * (answers.length - 1));
     const selectedAnswer = answers[randomNum];
 
-    const embed = new Discord.MessageEmbed()
-      .setAuthor(`${args.join(' ')}`, client.user.avatarURL())
-      .setColor('#6F39B0')
-      .setDescription(`🎱 ${selectedAnswer} 🎱`)
-      .setTimestamp(message.createdAt)
-      .setFooter(`8ball | ${message.author.tag}`);
-
-    message.channel.send(embed);
+    validMessage({
+      Discord,
+      client,
+      message,
+      command: this,
+      description: `🎱 ${selectedAnswer} 🎱`,
+      author: args.join(' '),
+    });
   },
 };

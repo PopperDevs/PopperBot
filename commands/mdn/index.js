@@ -24,7 +24,8 @@ module.exports = {
     // const resultUrls = data.querySelectorAll('.result a');
 
     if (resultTitles.length === 0) {
-      return message.channel.send('No results found.');
+      message.channel.send('No results found.');
+      return;
     }
 
     const resultCount = Math.min(5, resultTitles.length);
@@ -39,10 +40,10 @@ module.exports = {
     for (let i = 0; i < resultCount; i += 1) {
       const title = resultTitles[i].innerHTML;
       const excerpt = resultExcerpts[i].innerHTML.replace(/<[^>]*>?/gm, '');
-      const url =
-        'https://developer.mozilla.org/' + resultTitles[i].getAttribute('href');
+      const resultURL =
+        `https://developer.mozilla.org/${resultTitles[i].getAttribute('href')}`;
 
-      embed.addField(title, `${excerpt}\n${url}`);
+      embed.addField(title, `${excerpt}\n${resultURL}`);
     }
 
     message.channel.send(embed);
