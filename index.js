@@ -4,6 +4,7 @@ require('dotenv').config();
 const { log } = require('./lib/log');
 const { getCommands } = require('./commands');
 const { hasPermission } = require('./lib/utils');
+const { unAuthorizedCommand } = require('./lib/responseHandler');
 
 const client = new Discord.Client();
 
@@ -12,7 +13,11 @@ getCommands();
 client.on('ready', () => {
   log.emit(
     'log',
-    `${client.user.tag} is ready with access to ${client.users.cache.size} users and ${client.guilds.cache.size} guilds.`,
+    `${client.user.tag} is ready with access to ${client.users.cache.size} user${client.users.cache.size > 1
+      ? 's'
+      : ''} and ${client.guilds.cache.size} guild${client.guilds.cache.size > 1
+      ? 's'
+      : ''}.`,
   );
 });
 
@@ -32,7 +37,7 @@ client.on('message', (message) => {
       args,
     });
   } else {
-    message.reply('you are not authorized to execute this command. 🛑');
+    unAuthorizedCommand(Discord, message, command);
   }
 });
 
