@@ -23,4 +23,6 @@ function vote({ id, choiceIdx }) {
   };
 }
 
-module.exports = { addPoll, getPoll, clearPoll, vote };
+module.exports = {
+  addPoll, getPoll, clearPoll, vote
+};
