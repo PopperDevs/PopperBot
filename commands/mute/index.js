@@ -65,7 +65,6 @@ module.exports = {
         }
       } else if (await getRole(message, args[0])) {
         const role = await getRole(message, args[0]);
-        console.log(role);
         if (message.author !== role.guild.owner
           && message.member.roles.highest.comparePositionTo(role) < 1) {
           message.reply('you are not allowed to mute the members with this role.');

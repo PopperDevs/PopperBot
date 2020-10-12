@@ -9,8 +9,7 @@ function formatChoices(choices) {
 function getWinnerIdx(arr) {
   return arr
     .sort(
-      (a, b) =>
-        arr.filter((v) => v === a).length - arr.filter((v) => v === b).length
+      (a, b) => arr.filter((v) => v === a).length - arr.filter((v) => v === b).length,
     )
     .pop();
 }
@@ -34,7 +33,7 @@ module.exports = {
       message.channel.send(
         new Discord.MessageEmbed()
           .setColor('#FF9AA2')
-          .setTitle('There is a poll in action !')
+          .setTitle('There is a poll in action !'),
       );
       return;
     }
@@ -49,7 +48,7 @@ module.exports = {
     const validation = validatePoll({ pollDuration, pollTitle, pollChoices });
     if (validation !== true) {
       message.channel.send(
-        new Discord.MessageEmbed().setColor('#FF9AA2').setTitle(validation)
+        new Discord.MessageEmbed().setColor('#FF9AA2').setTitle(validation),
       );
       return;
     }

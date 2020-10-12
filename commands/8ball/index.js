@@ -31,7 +31,7 @@ module.exports = {
   permissions: permissionType.user,
   template: '8ball <question>',
   async handler({
-    Discord, client, message, args
+    Discord, client, message, args,
   }) {
     if (args.length === 0) {
       syntaxErrorMessage(Discord, message, this);

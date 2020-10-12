@@ -24,5 +24,5 @@ function vote({ id, choiceIdx }) {
 }
 
 module.exports = {
-  addPoll, getPoll, clearPoll, vote
+  addPoll, getPoll, clearPoll, vote,
 };

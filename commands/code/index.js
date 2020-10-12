@@ -14,7 +14,7 @@ module.exports = {
       command: this,
       author: 'Sending Code',
       description: 'You can use the following template to share your code.',
-      fields: [['Example', '`` ```language \ncode here \n``` ``']]
+      fields: [['Example', '`` ```language \ncode here \n``` ``']],
     });
   },
 };

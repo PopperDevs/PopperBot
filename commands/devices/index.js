@@ -15,7 +15,7 @@ module.exports = {
   permissions: permissionType.user,
   template: 'devices [user]',
   async handler({
-    Discord, client, message, args
+    Discord, client, message, args,
   }) {
     const u = (await getUser(message, args.join(' '))) || message.author;
     return validMessage({

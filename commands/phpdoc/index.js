@@ -10,15 +10,15 @@ module.exports = {
   permissions: permissionType.user,
   template: 'phpdoc',
   async handler({
-    Discord, client, message, args
+    Discord, client, message, args,
   }) {
     if (args.length === 0) {
       message.channel.send(
         new Discord.MessageEmbed()
           .setColor('#FF9AA2')
           .setTitle(
-            `Incorrect syntax! Correct usage of this command: \`${process.env.PREFIX}${this.template} <query>\``
-          )
+            `Incorrect syntax! Correct usage of this command: \`${process.env.PREFIX}${this.template} <query>\``,
+          ),
       );
       return;
     }
@@ -40,7 +40,7 @@ module.exports = {
 
     if (text.includes("doesn't exist")) {
       embed.setDescription(
-        'I did not find an exact match, maybe you are looking for one of the following?'
+        'I did not find an exact match, maybe you are looking for one of the following?',
       );
 
       const urls = data.querySelectorAll('#quickref_functions li a');

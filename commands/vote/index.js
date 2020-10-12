@@ -22,7 +22,7 @@ module.exports = {
     const validation = validateVote({ poll, userId, voteIdx });
     if (validation !== true) {
       message.channel.send(
-        new Discord.MessageEmbed().setColor('#FF9AA2').setTitle(validation)
+        new Discord.MessageEmbed().setColor('#FF9AA2').setTitle(validation),
       );
       return;
     }

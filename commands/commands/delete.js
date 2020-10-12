@@ -7,7 +7,7 @@ module.exports = {
   aliases: ['del', 'rm', '-'],
   template: 'del <existingCommandName>',
   handler({
-    Discord, client, message, args
+    Discord, client, message, args,
   }) {
     const command = getCommands().get(args[0]);
     if (command) {
@@ -29,7 +29,7 @@ module.exports = {
         message,
         command: this,
         title: 'Command Delete',
-        description: `The command ${command.name} has been deleted from the system !`
+        description: `The command ${command.name} has been deleted from the system !`,
       });
     }
     return errorMessage(Discord, message, this, args, 'The command you tried to delete is unknown !');

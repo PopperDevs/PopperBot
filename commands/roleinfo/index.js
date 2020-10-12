@@ -15,7 +15,7 @@ module.exports = {
           .setColor('#FF9AA2')
           .setFooter(`roleinfo | ${message.author.tag}`)
           .setTimestamp(message.createdAt)
-          .setTitle('No role found.')
+          .setTitle('No role found.'),
       );
     } else {
       message.channel.send(
@@ -29,7 +29,7 @@ module.exports = {
           .addField('Color', role.hexColor, true)
           .addField('Mentionable', role.mentionable ? 'Yes' : 'No', true)
           .addField('Users in Role: ', role.members.size, true)
-          .addField('Created at', role.createdAt.toLocaleString(), true)
+          .addField('Created at', role.createdAt.toLocaleString(), true),
       );
     }
   },

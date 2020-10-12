@@ -7,7 +7,7 @@ module.exports = {
   permissions: permissionType.user,
   template: 'hex <value>',
   handler({
-    Discord, client, message, args
+    Discord, client, message, args,
   }) {
     let colorValue = args[0];
     const colorRegex = /^([0-9a-f]{3}){1,2}$/i;
@@ -31,7 +31,7 @@ module.exports = {
         parseInt(colorValue.slice(2, 4), 16)
       }, ${
         parseInt(colorValue.slice(4), 16)
-      }`]]
+      }`]],
     });
   },
 };

@@ -15,7 +15,7 @@ module.exports = {
       author: 'Don\'t Ask To Ask',
       description: `You will get help much faster by just asking your question
       and providing any relevant code examples.
-      https://dontasktoask.com/`
+      https://dontasktoask.com/`,
     });
   },
 };

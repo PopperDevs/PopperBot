@@ -32,7 +32,7 @@ module.exports = {
                   }`
               }`
               : 'disabled'
-          }.`
+          }.`,
         );
       }
     } else {

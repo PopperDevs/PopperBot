@@ -40,8 +40,7 @@ module.exports = {
     for (let i = 0; i < resultCount; i += 1) {
       const title = resultTitles[i].innerHTML;
       const excerpt = resultExcerpts[i].innerHTML.replace(/<[^>]*>?/gm, '');
-      const resultURL =
-        `https://developer.mozilla.org/${resultTitles[i].getAttribute('href')}`;
+      const resultURL = `https://developer.mozilla.org/${resultTitles[i].getAttribute('href')}`;
 
       embed.addField(title, `${excerpt}\n${resultURL}`);
     }

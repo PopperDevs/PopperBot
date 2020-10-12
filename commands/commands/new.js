@@ -33,7 +33,7 @@ module.exports = {
           client,
           message,
           command: this,
-          description: `The command ${command.name} has been added to the system !`
+          description: `The command ${command.name} has been added to the system !`,
         });
       }
     });

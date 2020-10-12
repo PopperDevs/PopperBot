@@ -9,7 +9,7 @@ module.exports = {
   aliases: ['rl'],
   template: 'rl <commandName>',
   handler({
-    Discord, client, message, args
+    Discord, client, message, args,
   }) {
     // if (args[0] === 'all') {
     //   getCommands().forEach((command) => {
@@ -60,7 +60,7 @@ module.exports = {
         client,
         message,
         command: this,
-        description: `The command ${comm.name} has been reloaded !`
+        description: `The command ${comm.name} has been reloaded !`,
       });
     }
     return syntaxErrorMessage(Discord, message, this);

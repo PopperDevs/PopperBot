@@ -9,7 +9,7 @@ module.exports = {
   template: 'userinfo [user]',
   async handler({ Discord, message, args }) {
     const u = message.guild.member(
-      (await getUser(message, args.join(' '))) || message.author
+      (await getUser(message, args.join(' '))) || message.author,
     );
     message.channel.send(
       new Discord.MessageEmbed()
@@ -23,18 +23,16 @@ module.exports = {
           'Permissions',
           u.permissions
             .toArray()
-            .map((x) =>
-              x
-                .toLowerCase()
-                .split('_')
-                .map((y) => y.replace(/^./, (z) => z.toUpperCase()))
-                .join(' ')
-            )
-            .join(', ')
+            .map((x) => x
+              .toLowerCase()
+              .split('_')
+              .map((y) => y.replace(/^./, (z) => z.toUpperCase()))
+              .join(' '))
+            .join(', '),
         )
-        .addField('Roles', u._roles.map((x) => `<@&${x}>`).join(', '))
+        .addField('Roles', u.roles.cache.map((x) => x.toString()).join(', '))
         .addField('Joined At', u.joinedAt.toLocaleString(), true)
-        .addField('Registered At', u.user.createdAt.toLocaleString(), true)
+        .addField('Registered At', u.user.createdAt.toLocaleString(), true),
     );
   },
 };

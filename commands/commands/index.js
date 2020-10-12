@@ -10,7 +10,7 @@ module.exports = {
   permissions: permissionType.owner,
   template: 'commands',
   handler({
-    Discord, client, message, args
+    Discord, client, message, args,
   }) {
     const subCommand = this.subCommands.get(args[0]);
 
@@ -18,7 +18,7 @@ module.exports = {
       if (hasPermission({ author: message.author, member: message.member }, subCommand)) {
         args.shift();
         return subCommand.handler({
-          Discord, client, message, args
+          Discord, client, message, args,
         });
       }
       return unAuthorizedCommand(Discord, message, this);

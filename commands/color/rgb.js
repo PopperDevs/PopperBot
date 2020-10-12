@@ -7,7 +7,7 @@ module.exports = {
   permissions: permissionType.user,
   template: 'rgb <red> <green> <blue>',
   handler({
-    Discord, client, message, args
+    Discord, client, message, args,
   }) {
     let colorValue = args;
     if (colorValue[0] !== 'random' && !colorValue.every((x) => +x >= 0 && +x <= 255)) {
@@ -19,7 +19,8 @@ module.exports = {
     }
     const hexCode = colorValue.reduce(
       (string, value) => string + (+value).toString(16).padStart(2, 0).toUpperCase(),
-      '');
+      '',
+    );
     return validMessage({
       Discord,
       client,
@@ -28,7 +29,7 @@ module.exports = {
       color: `#${hexCode}`,
       title: `RGB ${colorValue.join(', ')}`,
       thumbnail: `https://via.placeholder.com/150/${hexCode}?text=+`,
-      fields: [['Hex', `#${hexCode}`]]
+      fields: [['Hex', `#${hexCode}`]],
     });
   },
 };
