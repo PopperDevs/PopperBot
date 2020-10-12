@@ -33,21 +33,18 @@ module.exports = {
   async handler({
     Discord, client, message, args,
   }) {
-    if (args.length === 0) {
-      syntaxErrorMessage(Discord, message, this);
-      return;
-    }
+    if (args.length === 0) return syntaxErrorMessage(Discord, message, this);
 
     const randomNum = Math.floor(Math.random() * (answers.length - 1));
     const selectedAnswer = answers[randomNum];
 
-    validMessage({
+    return validMessage({
       Discord,
       client,
       message,
       command: this,
       description: `🎱 ${selectedAnswer} 🎱`,
-      author: args.join(' '),
+      author: { name: args.join(' ') },
     });
   },
 };

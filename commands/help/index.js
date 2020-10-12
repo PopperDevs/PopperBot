@@ -36,7 +36,7 @@ module.exports = {
       client,
       message,
       command: this,
-      author: 'Help',
+      author: { name: 'Help' },
       thumbnail: client.user.displayAvatarURL(),
       fields,
     });

@@ -17,7 +17,7 @@ module.exports = {
       client,
       message,
       command: this,
-      author: client.user.tag,
+      author: { name: client.user.tag },
       description: packageJSON.description,
       thumbnail: client.user.displayAvatarURL(),
       fields: [

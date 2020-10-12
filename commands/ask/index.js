@@ -7,12 +7,12 @@ module.exports = {
   permissions: permissionType.user,
   template: 'ask',
   async handler({ Discord, client, message }) {
-    validMessage({
+    return validMessage({
       Discord,
       client,
       message,
       command: this,
-      author: 'Don\'t Ask To Ask',
+      author: { name: 'Don\'t Ask To Ask' },
       description: `You will get help much faster by just asking your question
       and providing any relevant code examples.
       https://dontasktoask.com/`,

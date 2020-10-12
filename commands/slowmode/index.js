@@ -1,4 +1,5 @@
 const { permissionType, guildPermissionType, commandType } = require('../../lib/permissions');
+const { errorMessage, syntaxErrorMessage, validMessage } = require('../../lib/responseHandler');
 const { parseTime } = require('../../lib/utils');
 
 module.exports = {
@@ -8,15 +9,20 @@ module.exports = {
   permissions: permissionType.mod,
   guildPermissions: [guildPermissionType.MANAGE_CHANNELS],
   template: 'slow <time>',
-  async handler({ message, args }) {
-    if (!message.guild) {
-      message.channel.send('This command can only be used in a guild.');
-    } else if (args.length > 0) {
+  async handler({
+    Discord, client, message, args,
+  }) {
+    if (!message.guild) return errorMessage(Discord, message, this, args, 'This command can only be used in a guild.');
+    if (args.length > 0) {
       const time = parseTime(args[0]) || (args[0] === 'off' ? { millis: 0 } : null);
       if (time) {
         await message.channel.setRateLimitPerUser(time.millis / 1000);
-        message.channel.send(
-          `The${
+        return validMessage({
+          Discord,
+          client,
+          message,
+          command: this,
+          description: `The${
             time.millis > 0
               ? ' new '
               : ' '
@@ -33,10 +39,9 @@ module.exports = {
               }`
               : 'disabled'
           }.`,
-        );
+        });
       }
-    } else {
-      message.channel.send(`You need to specify a duration. Correct usage of this command : \`${process.env.PREFIX}${this.template}\``);
     }
+    return syntaxErrorMessage(Discord, message, this, { prefix: 'You need to specify a duration.' });
   },
 };

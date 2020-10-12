@@ -1,4 +1,5 @@
 const { permissionType, commandType } = require('../../lib/permissions');
+const { validMessage } = require('../../lib/responseHandler');
 const { getUser } = require('../../lib/utils');
 
 module.exports = {
@@ -7,20 +8,22 @@ module.exports = {
   type: commandType.base.name,
   permissions: permissionType.user,
   template: 'userinfo [user]',
-  async handler({ Discord, message, args }) {
+  async handler({
+    Discord, client, message, args,
+  }) {
     const u = message.guild.member(
       (await getUser(message, args.join(' '))) || message.author,
     );
-    message.channel.send(
-      new Discord.MessageEmbed()
-        .setAuthor(u.user.tag, u.user.displayAvatarURL())
-        .setColor('#6F39B0')
-        .setFooter(`userinfo | ${message.author.tag}`)
-        .setTimestamp(message.createdAt)
-        .setThumbnail(u.user.displayAvatarURL())
-        .addField('ID', u.user.id)
-        .addField(
-          'Permissions',
+    return validMessage({
+      Discord,
+      client,
+      message,
+      command: this,
+      author: { name: u.user.tag, avatar: u.user.displayAvatarURL() },
+      thumbnail: u.user.displayAvatarURL(),
+      fields: [
+        ['ID', u.user.id, false],
+        ['Permissions',
           u.permissions
             .toArray()
             .map((x) => x
@@ -28,11 +31,11 @@ module.exports = {
               .split('_')
               .map((y) => y.replace(/^./, (z) => z.toUpperCase()))
               .join(' '))
-            .join(', '),
-        )
-        .addField('Roles', u.roles.cache.map((x) => x.toString()).join(', '))
-        .addField('Joined At', u.joinedAt.toLocaleString(), true)
-        .addField('Registered At', u.user.createdAt.toLocaleString(), true),
-    );
+            .join(', '), false],
+        ['Roles', u.roles.cache.map((x) => x.toString()).join(', '), false],
+        ['Joined At', u.joinedAt.toLocaleString()],
+        ['Registered At', u.user.createdAt.toLocaleString()],
+      ],
+    });
   },
 };

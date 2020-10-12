@@ -1,5 +1,6 @@
 const { evaluate } = require('mathjs');
 const { permissionType, commandType } = require('../../lib/permissions');
+const { validMessage, errorMessage } = require('../../lib/responseHandler');
 
 module.exports = {
   name: 'math',
@@ -7,20 +8,24 @@ module.exports = {
   type: commandType.base.name,
   permissions: permissionType.user,
   template: 'math',
-  handler({ Discord, args, message }) {
-    const s = args.join(' ');
-    const embed = new Discord.MessageEmbed()
-      .setTimestamp(message.createdAt)
-      .setTitle(s)
-      .setFooter(`math | ${message.author.tag}`);
+  handler({
+    Discord, client, args, message,
+  }) {
+    const s = args.join(' ').trim();
+    if (!s) return errorMessage(Discord, message, this, args, 'You need to provide an expression to evaluate.');
     try {
-      embed
-        .addField('Result', `\`\`\`\n${evaluate(s)}\n\`\`\``)
-        .setColor('#6F39B0');
+      const result = evaluate(s);
+      return validMessage({
+        Discord,
+        client,
+        message,
+        command: this,
+        fields: [
+          [s, `\`\`\`\n${result}\n\`\`\``],
+        ],
+      });
     } catch (e) {
-      embed.setColor('#FF9AA2').setDescription(e);
+      return errorMessage(Discord, message, this, args, e);
     }
-
-    message.channel.send(embed);
   },
 };

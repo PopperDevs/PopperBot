@@ -1,4 +1,5 @@
 const { permissionType, commandType } = require('../../lib/permissions');
+const { validMessage } = require('../../lib/responseHandler');
 
 const { mstoTime } = require('../../lib/utils');
 
@@ -8,8 +9,16 @@ module.exports = {
   type: commandType.base.name,
   permissions: permissionType.user,
   template: 'up',
-  handler({ client, message }) {
-    message.channel.send(`🤖 The bot has been up and running for ${mstoTime(client.uptime)} !`);
+  handler({ Discord, client, message }) {
+    return validMessage({
+      Discord,
+      client,
+      message,
+      command: this,
+      description: `🤖 The bot has been up and running for ${mstoTime(client.uptime)} !`,
+      fields: [
+        ['Last ready at', client.readyAt.toLocaleString()],
+      ],
+    });
   },
 };
-// TODO: make it nice, an embed ? Start time ?

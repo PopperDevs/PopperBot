@@ -10,13 +10,17 @@ module.exports = {
     Discord, client, message, args,
   }) {
     let colorValue = args;
-    if (colorValue[0] !== 'random' && !colorValue.every((x) => +x >= 0 && +x <= 255)) {
-      return syntaxErrorMessage(Discord, message, this);
-    }
+    if (colorValue[0] !== 'random'
+      && !colorValue.every((x) => +x >= 0
+      && +x <= 255)) return syntaxErrorMessage(Discord, message, this);
 
     if (colorValue[0] === 'random') {
-      colorValue = Array.from({ length: 3 }, () => Math.floor(256 * Math.random()));
+      colorValue = Array.from(
+        { length: 3 },
+        () => Math.floor(256 * Math.random()),
+      );
     }
+
     const hexCode = colorValue.reduce(
       (string, value) => string + (+value).toString(16).padStart(2, 0).toUpperCase(),
       '',

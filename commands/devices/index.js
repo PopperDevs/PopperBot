@@ -23,7 +23,7 @@ module.exports = {
       client,
       message,
       command: this,
-      author: u.tag,
+      author: { name: u.tag },
       thumbnail: u.displayAvatarURL(),
       fields: [
         ['Desktop', statuses[u.presence.clientStatus?.desktop]],

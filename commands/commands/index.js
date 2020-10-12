@@ -23,7 +23,7 @@ module.exports = {
       }
       return unAuthorizedCommand(Discord, message, this);
     }
-    return syntaxErrorMessage(Discord, message, this, ' <add/del/rl> <commandName>');
+    return syntaxErrorMessage(Discord, message, this, { suffix: ' <add/del/rl> <commandName>' });
   },
 };
 

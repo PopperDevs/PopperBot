@@ -21,7 +21,7 @@ module.exports = {
       }
       return unAuthorizedCommand(Discord, message, this);
     }
-    return syntaxErrorMessage(Discord, message, this, ' <hex/rgb> <value>');
+    return syntaxErrorMessage(Discord, message, this, { suffix: ' <hex/rgb> <value>' });
   },
 };
 

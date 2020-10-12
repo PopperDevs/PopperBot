@@ -12,7 +12,15 @@ module.exports = {
     Discord, client, message, args,
   }) {
     const comm = getCommands().get(args[0]);
-    if (comm) return errorMessage(Discord, message, this, args, `The command ${comm.name} is already in the system. Try reloading it instead.`);
+    if (comm) {
+      return errorMessage(
+        Discord,
+        message,
+        this,
+        args,
+        `The command ${comm.name} is already in the system. Try reloading it instead.`,
+      );
+    }
 
     let added = false;
     const files = fs.readdirSync(`${__dirname}/..`);

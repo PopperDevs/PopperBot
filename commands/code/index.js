@@ -7,12 +7,12 @@ module.exports = {
   permissions: permissionType.user,
   template: 'code',
   async handler({ Discord, client, message }) {
-    validMessage({
+    return validMessage({
       Discord,
       client,
       message,
       command: this,
-      author: 'Sending Code',
+      author: { name: 'Sending Code' },
       description: 'You can use the following template to share your code.',
       fields: [['Example', '`` ```language \ncode here \n``` ``']],
     });
