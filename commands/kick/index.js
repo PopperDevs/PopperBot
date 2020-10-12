@@ -14,7 +14,6 @@ function isManageable(member, author) {
 
 module.exports = {
   name: 'kick',
-  aliases: [],
   type: commandType.mod.name,
   permissions: permissionType.mod,
   guildPermissions: [guildPermissionType.KICK_MEMBERS],

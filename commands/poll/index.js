@@ -23,7 +23,6 @@ function validatePoll({ pollDuration, pollTitle, pollChoices }) {
 
 module.exports = {
   name: 'poll',
-  aliases: [],
   type: commandType.base.name,
   permissions: permissionType.user,
   template: 'poll <duration (sec)> <title> <choices (comma separated)>',

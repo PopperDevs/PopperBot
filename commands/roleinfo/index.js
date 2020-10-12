@@ -4,7 +4,6 @@ const { getRole } = require('../../lib/utils');
 
 module.exports = {
   name: 'roleinfo',
-  aliases: [],
   type: commandType.base.name,
   permissions: permissionType.user,
   template: 'roleinfo [role]',
