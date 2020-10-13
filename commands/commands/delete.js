@@ -1,14 +1,14 @@
-const parent = require('./index');
-
 const { log } = require('../../lib/log');
+const { validMessage, errorMessage } = require('../../lib/responseHandler');
 const { getCommands } = require('../index');
 
 module.exports = {
   name: 'delete',
-  aliases: ['del', 'remove', '-'],
-  template: 'del <commandName>',
-  parent,
-  handler({ message, args }) {
+  aliases: ['del', 'rm', '-'],
+  template: 'del <existingCommandName>',
+  handler({
+    Discord, client, message, args,
+  }) {
     const command = getCommands().get(args[0]);
     if (command) {
       delete require.cache[require.resolve(`../${command.name}`)];
@@ -23,9 +23,15 @@ module.exports = {
 
       log.emit('log', `${new Date().toLocaleString()} | Command ${command.name} was deleted !`);
 
-      message.channel.send(`The command ${command.name} has been deleted from the system !`);
-    } else {
-      message.channel.send(`The command you tried to delete is unknown ! Correct usage of this command : \`${process.env.PREFIX}${this.parent.template} ${this.template}\``);
+      return validMessage({
+        Discord,
+        client,
+        message,
+        command: this,
+        title: 'Command Delete',
+        description: `The command ${command.name} has been deleted from the system !`,
+      });
     }
+    return errorMessage(Discord, message, this, args, 'The command you tried to delete is unknown !');
   },
 };

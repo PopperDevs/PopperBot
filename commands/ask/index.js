@@ -1,24 +1,21 @@
 const { permissionType, commandType } = require('../../lib/permissions');
 const { validMessage } = require('../../lib/responseHandler');
 
-const { mstoTime } = require('../../lib/utils');
-
 module.exports = {
-  name: 'uptime',
-  aliases: ['up'],
+  name: 'ask',
   type: commandType.base.name,
   permissions: permissionType.user,
-  template: 'up',
-  handler({ Discord, client, message }) {
+  template: 'ask',
+  async handler({ Discord, client, message }) {
     return validMessage({
       Discord,
       client,
       message,
       command: this,
-      description: `🤖 The bot has been up and running for ${mstoTime(client.uptime)} !`,
-      fields: [
-        ['Last ready at', client.readyAt.toLocaleString()],
-      ],
+      author: { name: 'Don\'t Ask To Ask' },
+      description: `You will get help much faster by just asking your question
+      and providing any relevant code examples.
+      https://dontasktoask.com/`,
     });
   },
 };

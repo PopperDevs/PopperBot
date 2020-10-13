@@ -1,6 +1,7 @@
 {
   "name": "popperbot",
   "version": "1.0.0",
+  "author": "PopperDevs",
   "description": "A Discord.JS bot used as a community project to work together on a modular system.",
   "main": "index.js",
   "scripts": {
@@ -11,11 +12,14 @@
     "Discord",
     "Twitch"
   ],
-  "author": "Drills Kibo",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "discord.js": "^12.2.0",
-    "dotenv": "^8.2.0"
+    "dotenv": "^8.2.0",
+    "mathjs": "^7.0.2",
+    "moment": "^2.27.0",
+    "node-fetch": "^2.6.1",
+    "node-html-parser": "^1.2.20"
   },
   "devDependencies": {
     "eslint": "^7.4.0",

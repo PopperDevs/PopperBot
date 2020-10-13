@@ -1,29 +1,27 @@
 const { permissionType, commandType } = require('../../lib/permissions');
-const { unAuthorizedCommand, syntaxErrorMessage } = require('../../lib/responseHandler');
-
+const { syntaxErrorMessage, unAuthorizedCommand } = require('../../lib/responseHandler');
 const { hasPermission } = require('../../lib/utils');
 
 module.exports = {
-  name: 'commands',
-  aliases: ['cmd'],
-  type: commandType.owner.name,
-  permissions: permissionType.owner,
-  template: 'commands',
+  name: 'color',
+  type: commandType.base.name,
+  permissions: permissionType.user,
+  template: 'color',
   handler({
     Discord, client, message, args,
   }) {
-    const subCommand = this.subCommands.get(args[0]);
+    const subCommand = this.subCommands.get(args.length === 1 ? 'hex' : args[0]);
 
     if (subCommand) {
       if (hasPermission({ author: message.author, member: message.member }, subCommand)) {
-        args.shift();
+        if (args.length > 1) args.shift();
         return subCommand.handler({
           Discord, client, message, args,
         });
       }
       return unAuthorizedCommand(Discord, message, this);
     }
-    return syntaxErrorMessage(Discord, message, this, { suffix: ' <add/del/rl> <commandName>' });
+    return syntaxErrorMessage(Discord, message, this, { suffix: ' <hex/rgb> <value>' });
   },
 };
 
